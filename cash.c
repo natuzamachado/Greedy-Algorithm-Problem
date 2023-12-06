@@ -22,22 +22,23 @@ int total_coins;
 int main(void)
 {
     int change_owed = get_cents();
+    int remainder = change_owed;
 
-    if (change_owed >= quarter)
+    if (remainder >= quarter)
     {
-        calculate_quarters(change_owed);
+        remainder -= calculate_quarters(remainder);
     }
-    else if (change_owed >= dime)
+    if (remainder >= dime)
     {
-        calculate_dimes(change_owed);
+        remainder -= calculate_dimes(remainder);
     }
-    else if (change_owed >= nickel)
+    if (remainder >= nickel)
     {
-        calculate_nickels(change_owed);
+        remainder -= calculate_nickels(remainder);
     }
-    else
+    if (remainder >= penny)
     {
-        calculate_pennies(change_owed);
+        calculate_pennies(remainder);
     }
 
     total_coins = (quarters_amount + dimes_amount + nickels_amount + pennies_amount);
@@ -65,51 +66,14 @@ int get_cents(void)
 
 int calculate_quarters(int n)
 {
-    int remainder = n;
-
-    if (n == quarter)
-    {
-        quarters_amount = 1;
-        return quarters_amount;
-    }
-
-    else if ((n % quarter) == 0)
-    {
-        quarters_amount = n / quarter;
-        return quarters_amount;
-    }
-
-    if (n > quarter)
-    {
-        do
-        {
-            remainder -= quarter;
-            quarters_amount += 1;
-
-        } while (remainder > quarter);
-
-        if (remainder >= dime)
-        {
-            calculate_dimes(remainder);
-        }
-        else if (remainder >= nickel)
-        {
-            calculate_pennies(remainder);
-        }
-        else if (remainder >= penny)
-        {
-            calculate_pennies(remainder);
-        }
-
-        return quarters_amount;
-    }
-
-    return quarters_amount;
+    quarters_amount = n / quarter;
+    
+    return quarters_amount * quarter;
 }
 
 int calculate_dimes(int n)
 {
-    int remainder = n;
+    dimes_amount = n / dime;
 
     if (n == dime)
     {
@@ -117,97 +81,23 @@ int calculate_dimes(int n)
         return dimes_amount;
     }
 
-    else if ((n % dime) == 0)
-    {
-        dimes_amount = n / dime;
-        return dimes_amount;
-    }
-
-    if (n > dime)
-    {
-        do
-        {
-            remainder -= dime;
-            dimes_amount += 1;
-
-        } while (remainder > dime);
-
-        if (remainder >= nickel)
-        {
-            calculate_nickels(remainder);
-        }
-        else if (remainder >= penny)
-        {
-            calculate_pennies(remainder);
-        }
-    }
-    return dimes_amount;
+    return dimes_amount * dime;
 }
+    
+
 
 int calculate_nickels(int n)
 {
-    int remainder = n;
+    nickels_amount = n / nickel;
 
-    if (n == nickel)
-    {
-        nickels_amount = 1;
-        return nickels_amount;
-    }
-
-    else if ((n % nickel) == 0)
-    {
-        nickels_amount = n / nickel;
-        return nickels_amount;
-    }
-
-    if (n > nickel)
-    {
-        do
-        {
-            remainder -= nickel;
-            nickels_amount += 1;
-
-        } while (remainder > nickel);
-
-        if (remainder > 0)
-        {
-            calculate_pennies(remainder);
-        }
-        else
-        {
-            return nickels_amount;
-        }
-    }
-    return nickels_amount;
+    return nickels_amount * nickel;
 }
+    
+
 
 int calculate_pennies(int n)
 {
-    int remainder = n;
-
-    if (n == penny)
-    {
-        pennies_amount = 1;
-        return pennies_amount;
-    }
-
-    else if ((n % penny) == 0)
-    {
-        pennies_amount = n / penny;
-        return pennies_amount;
-    }
-
-    if (n > penny)
-    {
-        do
-        {
-            remainder -= penny;
-            pennies_amount += 1;
-
-        } while (remainder > penny);
-
-        return pennies_amount;
-    }
-
-    return pennies_amount;
+    pennies_amount = n / penny;
+ 
+    return pennies_amount * penny;
 }
