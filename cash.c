@@ -24,22 +24,14 @@ int main(void)
     int change_owed = get_cents();
     int remainder = change_owed;
 
-    if (remainder >= quarter)
-    {
+  
         remainder -= calculate_quarters(remainder);
-    }
-    if (remainder >= dime)
-    {
+   
         remainder -= calculate_dimes(remainder);
-    }
-    if (remainder >= nickel)
-    {
+   
         remainder -= calculate_nickels(remainder);
-    }
-    if (remainder >= penny)
-    {
-        calculate_pennies(remainder);
-    }
+
+                    calculate_pennies(remainder);
 
     total_coins = (quarters_amount + dimes_amount + nickels_amount + pennies_amount);
 
@@ -99,5 +91,5 @@ int calculate_pennies(int n)
 {
     pennies_amount = n / penny;
  
-    return pennies_amount * penny;
+    return pennies_amount;
 }
