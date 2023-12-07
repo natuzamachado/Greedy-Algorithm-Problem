@@ -67,12 +67,6 @@ int calculate_dimes(int n)
 {
     dimes_amount = n / dime;
 
-    if (n == dime)
-    {
-        dimes_amount = 1;
-        return dimes_amount;
-    }
-
     return dimes_amount * dime;
 }
     
